@@ -2,44 +2,54 @@
 <html>
     <head>
         <title>game</title>
-        <body>
-            <canvas id="c" width="640" height="480"></canvas>
-            <script src="instant.js"></script>
-            <script>
-                var plat = false;
-                var gravity = 0;
-                var player = new Character("world_wall.png", 295, 215, 48, 48, true, true);
-                var map = blockTilemap([[0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 1, 0, 0, 0, 0, 0, 0], [1, 1, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]], 50, "world_wall.png");
-                function game(){
-                    ctx.fillStyle = "black";
-                    ctx.fillRect(-100, -100, 6400, 4800);
-                    player.render();
-                    for(let i = 0; i < map.length; i++){
-                        map[i].render();
-                    }
-                    if(player.onPlat){
-                        gravity = 0;
-                    }
-                    if(!player.onPlat){
-                        gravity += 3;
-                    }
-                    if(keys.w == true && player.onPlat){
-                        gravity = -30;
-                    }
-                    if(keys.a == true){
-                        player.move(-7, 0);
-                    }
-                    if(keys.d == true){
-                        player.move(7, 0);
-                    }
-                    player.move(0, gravity);
-                }
-                var main = new Scene(game);
-                framerate = 1000/60;
-                setScene(main);
-                //screenScale();
-                startGame();
-            </script>
-        </body>
+        <style>
+            canvas{
+                padding: 0px;
+                margin: 0px;
+            }
+            body{
+                text-align: center;
+            }
+        </style>
     </head>
+    <body>
+        <canvas id="c" width="640" height="480"></canvas>
+        <script src="instant.js"></script>
+        <script>
+            var plat = false;
+            var gravity = 0;
+            var player = new Character("world_wall.png", 295, 215, 48, 48, true, true);
+            var map = blockTilemap([[0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0], [0, 1, 0, 0, 0, 0, 0, 0], [1, 1, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]], 50, "world_wall.png");
+            function game(){
+                ctx.fillStyle = "black";
+                ctx.fillRect(-100, -100, 6400, 4800);
+                player.render();
+                for(let i = 0; i < map.length; i++){
+                    map[i].render();
+                }
+                if(player.onPlat){
+                    gravity = 0;
+                }
+                if(!player.onPlat){
+                    gravity += 1;
+                }
+                if(keys.ArrowUp == true && player.onPlat){
+                    gravity = -18;
+                }
+                if(keys.ArrowLeft == true){
+                    player.move(-7, 0);
+                }
+                if(keys.ArrowRight == true){
+                    player.move(7, 0);
+                }
+                player.move(0, gravity);
+            }
+            var main = new Scene(game);
+            framerate = 1000/60;
+            setScene(main);
+            if(confirm("Scale game to fit screen? "))
+                screenScale();
+            startGame();
+        </script>
+    </body>
 </html>
