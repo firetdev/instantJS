@@ -7,3 +7,5 @@ The original design of this engine was written when I was 12 years old and wante
 It's pretty bad, but with recent updates it *is* usable.
 
 There's no documentation, or plans to add any fancy stuff like particles, actual physics, or animation, but if people actually use this then I'll add that stuff.
+
+btw game.html is a demo game and world_wall.png is a graphic for the game lol
