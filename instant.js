@@ -19,7 +19,7 @@ var framerate = 1000/60;
 
 window.addEventListener("keydown", function(e){
     let ck = e.key;
-    keys.ck = true;
+    keys[ck] = true;
 });
 
 window.addEventListener("keyup", function(e){
@@ -162,45 +162,43 @@ function Block(sprite, x, y, w, h){
     }
     this.collidesWith = function(body){
     	if(this.x + this.w >= body.x && this.x + this.w <= body.x + body.w && this.y + this.h >= body.y && this.y + this.h <= body.y + body.h){
-    		body.x = this.x + this.w;
-    		body.onPlat = true;
+    		//body.x = this.x + this.w;
     		body.onPlat = true;
     		return true;
     	} else if(this.x + this.w >= body.x && this.x + this.w <= body.x + body.w && this.y >= body.y && this.y <= body.y + body.h){
-    		body.onPlat = true;
-    		body.y = this.y - body.h;
+    		//body.y = this.y - body.h;
     		body.onPlat = true;
     		return true;
         } else if(this.x >= body.x && this.x <= body.x + body.w && this.y >= body.y && this.y <= body.y + body.h){
     		body.onPlat = true;
-    		body.y = this.y - (body.h);
+    		//body.y = this.y - (body.h);
     		return true;
     	} else if(this.x >= body.x && this.x <= body.x + body.w && this.y + this.h >= body.y && this.y + this.h <= body.y + body.h){
-            body.x = this.x - (body.w);
+            //body.x = this.x - (body.w);
     		body.onPlat = true;
     		return true;
         } else if(body.x > this.x && body.x + body.w < this.x + this.w && body.y > this.y && body.y + body.h < this.y + this.h){
     		body.onPlat = true;
     		return true;
     	} else if(body.x< this.x + this.w && body.x + body.w > this.x + this.w && body.y > this.y && body.y + body.h <= this.y + this.h){
-            body.x = this.x + (this.w);
+            //body.x = this.x + (this.w);
     		body.onPlat = true;
     		return true;
     	} else if(body.x > this.x && body.x + body.w < this.x + this.w && body.y < this.y && body.y + body.h > this.y){
     		body.onPlat = true;
-            body.y = this.y - body.h;
+            //body.y = this.y - body.h;
     		return true;
     	} else if(this.x < body.x && this.x + this.w > body.x + body.w && this.y + this.h > body.y && this.y + this.h < body.y + body.h){
     		body.onPlat = true;
-            body.y = this.y + this.h;
+            //body.y = this.y + this.h;
     		return true;
     	} else if(this.x > body.x && this.x < body.x + body.w && this.y < body.y && this.y + this.h > body.y + body.h){
             body.onPlat = true;
-            body.x = this.x - body.w;
+            //body.x = this.x - body.w;
             return true;
         } else if(this.x < body.x && this.x + this.w > body.x && this.y < body.y && this.y + this.h > body.y + body.h){
             body.onPlat = true;
-            body.x = this.x + this.w;
+            //body.x = this.x + this.w;
             return true;
         } else{
     	    body.onPlat = false;
@@ -413,7 +411,31 @@ function Character(sprite, x, y, w, h, camx, camy){
         let s2 = this.y;
         this.x += x;
         this.y += y;
-        if(x > 0){
+        var hitting = false;
+        for(let i = 0; i < gameBlocks.length; i++){
+            if(gameBlocks[i].collidesWith(this)){
+                hitting = true;
+                break;
+            }
+        }
+        if(hitting){
+            this.x = s1;
+            this.y = s2;
+            var newX = 0;
+            var newY = 0;
+            if(x > 0.5){
+                newX = x / 2;
+            }
+            if(y > 0.5){
+                newY = y / 2;
+            }
+            if(newX != 0 || newY != 0){
+                this.move(newX, newY);
+            }
+        } else{
+            ctx.translate(-x, -y);
+        }
+        /*if(x > 0){
             this.lx = 0;
             unmoving = false;
         } else if(x < 0){
@@ -460,7 +482,7 @@ function Character(sprite, x, y, w, h, camx, camy){
                     unmoving = false;
                 }
             }
-        }
+        }*/
     }
     this.bounce = function(x, y){
         let nx = -x;
